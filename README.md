@@ -116,15 +116,14 @@ $secret_key = "YOUR_SECURE_KEY"; // 修改这个值为复杂的字符串
 │   ├── db.php           # 数据库配置 (安装后生成)
 │   └── functions.php    # 通用函数库
 ├── api/                 # 功能
-│   ├── comment.php      # 评论功能
+│   ├── comment.php      # 评论提交接口
 │   ├── get_comments.php # 获取广场评论
 │   ├── like.php         # 广场喜欢
 │   └── submit.php       # 邮件提交
 ├── install.php          # 安装向导
 ├── index.php            # 前台首页 & 广场
-├── letter.php           # "A LETTER" 页面 (SVG 邮戳逻辑)
+├── letter.php           # "A LETTER" 页面
 ├── cron.php             # 定时任务脚本
-├── comment.php          # 评论提交接口
 └── README.md
 ```
 
