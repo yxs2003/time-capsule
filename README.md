@@ -17,12 +17,22 @@
   * **时光广场**：展示公开的信件，支持 **点赞** 和 **评论** 互动。
   * **精美信纸页**：`letter.php` 包含 SVG 生成的蚀刻风格邮戳（指南针、羽毛笔、土星等），随随机生成，极具仪式感。
   * **响应式设计**：完美适配移动端和桌面端（修复了移动端信纸与按钮的布局）。
+
+#### 发件
   
 [![发件](https://s41.ax1x.com/2025/12/10/pZuwN1U.jpg)](https://imgchr.com/i/pZuwN1U)
 
+#### 评论广场
+
 [![评论广场](https://s41.ax1x.com/2025/12/10/pZuwB7R.jpg)](https://imgchr.com/i/pZuwB7R)
 
-[![评论区](https://s41.ax1x.com/2025/12/10/pZuwtpT.jpg)](https://imgchr.com/i/pZuwtpT)
+#### 评论广场
+
+[![评论广场](https://s41.ax1x.com/2025/12/10/pZuwtpT.jpg)](https://imgchr.com/i/pZuwtpT)
+
+#### 评论广场
+
+![评论广场](https://youke2.picui.cn/s1/2025/12/10/693857e641935.jpg)
 
 
 ### 🛡️ 后台管理 (Admin Console)
