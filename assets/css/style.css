@@ -1,0 +1,270 @@
+/* style.css - Author: shiguang - v5.0 FINAL CLEAN */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=DotGothic16&display=swap');
+@font-face { font-family: 'Zpix'; src: url('../fonts/zpix.ttf') format('truetype'); }
+
+:root {
+    --red: #ff4d4d; --white: #f7f7f7; --bg: #2d2d2d;
+    --border: 4px solid #000; --paper: #fffdf0;
+    --green: #2ecc71; --blue: #3498db; --yellow: #f1c40f;
+    --grid-color: rgba(255, 255, 255, 0.05);
+}
+
+/* --- 全局基础 --- */
+* { box-sizing: border-box; font-family: 'Press Start 2P', 'Zpix', 'DotGothic16', monospace; }
+input, textarea, button { font-family: 'Zpix', 'DotGothic16', monospace !important; outline: none; }
+body { margin: 0; background-color: var(--bg); color: var(--white); scroll-behavior: smooth; }
+a { text-decoration: none; color: inherit; }
+
+/* --- 动画 --- */
+@keyframes bounce { 0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-10px); } 60% { transform: translateY(-5px); } }
+@keyframes blink-glow { 0% { opacity: 1; text-shadow: 0 0 5px var(--green); } 50% { opacity: 0.5; text-shadow: none; } 100% { opacity: 1; text-shadow: 0 0 5px var(--green); } }
+.animate-bounce { animation: bounce 2s infinite; }
+.animate-blink { animation: blink-glow 1.5s infinite; color: var(--green); }
+
+/* --- 1. 导航栏 --- */
+.pixel-nav { 
+    position: fixed; top: 0; left: 0; width: 100%; height: 60px; 
+    background: #fff; border-bottom: 4px solid #000; 
+    display: flex; justify-content: space-between; align-items: center; 
+    padding: 0 20px; z-index: 999; color: #333; 
+}
+.nav-brand a { font-size: 14px; font-weight: bold; color: var(--red); text-shadow: 2px 2px 0 #000; cursor: pointer; }
+.nav-links { display: flex; gap: 20px; }
+.nav-links a { font-size: 10px; color: #333; padding: 8px 12px; border: 2px solid transparent; transition: 0.2s; text-transform: uppercase; font-weight: bold; }
+.nav-links a:hover, .nav-links a.active { border: 2px solid #000; background: #eee; box-shadow: 2px 2px 0 #ccc; }
+
+.hamburger { display: none; cursor: pointer; flex-direction: column; gap: 5px; }
+.hamburger span { width: 25px; height: 3px; background: #000; display: block; } 
+@media (max-width: 768px) {
+    .hamburger { display: flex; }
+    .nav-links { display: none; position: absolute; top: 56px; right: 0; width: 200px; background: #fff; border: 4px solid #000; border-top: none; flex-direction: column; gap: 0; padding: 0; }
+    .nav-links.active { display: flex; }
+    .nav-links a { border: none; border-bottom: 1px solid #eee; padding: 15px; text-align: center; }
+}
+
+/* --- 2. 弹窗与遮罩 --- */
+.overlay, .custom-alert-overlay { 
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+    background: rgba(0,0,0,0.85); z-index: 2000; 
+    display: none; justify-content: center; align-items: center; 
+}
+.custom-alert-overlay { z-index: 9999; background: rgba(0,0,0,0.6); opacity: 0; visibility: hidden; transition: 0.2s; display: flex; }
+.custom-alert-overlay.show { opacity: 1; visibility: visible; }
+
+.custom-alert-box { background: #fff; border: 4px solid #000; color: #333; padding: 20px; min-width: 300px; text-align: center; box-shadow: 8px 8px 0 rgba(0,0,0,0.5); transform: scale(0.8); transition: 0.2s; }
+.custom-alert-overlay.show .custom-alert-box { transform: scale(1); }
+
+/* --- 3. 评论弹窗专用样式 --- */
+.comment-modal-box {
+    width: 600px; max-width: 95%; height: 80vh; 
+    display: flex; flex-direction: column;
+    background: #fff; border: 4px solid #000; padding: 20px;
+    position: relative; color: #333; box-shadow: 8px 8px 0 rgba(255,255,255,0.2);
+}
+.comment-scroll-area {
+    flex: 1; overflow-y: auto; border: 2px solid #eee;
+    padding: 10px; margin-bottom: 15px; background: #f9f9f9;
+}
+.comment-form-area { border-top: 2px dashed #000; padding-top: 15px; flex-shrink: 0; }
+
+/* --- 4. 广场与 Grid --- */
+.hero, .center-screen { height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; background-image: linear-gradient(var(--grid-color) 2px, transparent 2px), linear-gradient(90deg, var(--grid-color) 2px, transparent 2px); background-size: 40px 40px; }
+.square { min-height: 100vh; padding: 80px 20px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px; max-width: 1200px; margin: 0 auto; }
+.card { background: var(--white); color: #333; padding: 15px; border: var(--border); box-shadow: 6px 6px 0 rgba(0,0,0,0.5); display: flex; flex-direction: column; transition: 0.3s; height: 100%; }
+.card:hover { transform: translateY(-5px); box-shadow: 8px 8px 0 var(--yellow); }
+.card-content { margin-bottom: 15px; min-height: 60px; font-size: 12px; line-height: 1.6; display: -webkit-box; -webkit-line-clamp: 5; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis; cursor: pointer; flex-grow: 1; }
+.card-content.expanded { -webkit-line-clamp: unset; overflow: visible; }
+.card-header { display: flex; justify-content: space-between; border-bottom: 2px dashed #999; padding-bottom: 5px; margin-bottom: 10px; font-size: 10px; color: #666; }
+.card-actions { margin-top: auto; padding-top: 10px; border-top: 2px solid #000; display: flex; justify-content: space-between; align-items: center; }
+.action-btn { cursor: pointer; display: flex; align-items: center; gap: 5px; font-size: 10px; padding: 5px; border: 1px solid transparent; transition: 0.2s; }
+.action-btn:hover { color: var(--blue); background:#eee; border-radius:4px; }
+.heart-icon.liked { color: var(--red); transform: scale(1.2); transition: 0.2s; }
+
+/* 评论列表项 */
+.comment-item { font-size: 12px; background: #fff; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 4px; box-shadow: 2px 2px 0 #eee;}
+.comment-item.reply { margin-left: 30px; border-left: 4px solid var(--blue); background: #f0f8ff; position: relative; }
+.reply-btn { cursor:pointer; text-decoration:underline; font-weight:bold; font-size: 10px;}
+.pagination-controls { display: flex; justify-content: center; gap: 20px; margin: 10px 0; font-size: 12px; }
+.page-btn { cursor: pointer; text-decoration: underline; color: var(--blue); font-weight: bold; }
+
+/* --- 5. 组件 --- */
+.pixel-box { border: var(--border); background: var(--white); color: #333; padding: 20px; box-shadow: 8px 8px 0 #000; }
+.pixel-input { width: 100%; padding: 10px; font-size: 12px; border: 2px solid #000; margin-bottom: 8px; display: block; outline:none; background: #fff; color: #333; }
+.pixel-btn { background: var(--blue); color: #fff; border: 2px solid #000; padding: 10px 20px; cursor: pointer; box-shadow: 4px 4px 0 #000; font-size: 12px; transition: 0.1s; }
+.pixel-btn:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0 #000; }
+.pixel-btn.sm { padding: 4px 8px; font-size: 10px; box-shadow: 2px 2px 0 #000; }
+.pixel-btn.red { background: var(--red); }
+.pixel-btn.green { background: var(--green); }
+.pixel-btn.yellow { background: var(--yellow); color:#000; }
+
+/* =========================================
+   === 胶囊核心样式 (V5.0 最终修复版) ===
+   ========================================= */
+
+.capsule-container {
+    position: relative;
+    width: 180px; /* 大尺寸 */
+    height: 300px;
+    z-index: 10;
+}
+
+.capsule {
+    width: 100%; height: 100%;
+    position: relative;
+    cursor: pointer;
+    /* 默认悬浮动画 */
+    animation: float 4s ease-in-out infinite;
+    transform-origin: center center;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(2deg); }
+}
+
+/* --- 胶囊上半部分 --- */
+.cap-top {
+    position: absolute;
+    left: 0; top: 0; width: 100%; height: 140px;
+    background: transparent;
+    z-index: 2;
+    /* 核心修复：transition: all 确保 opacity 也能平滑过渡 */
+    transition: all 0.6s cubic-bezier(0.6, -0.28, 0.735, 0.045);
+}
+
+.cap-top::after {
+    content: ''; display: block;
+    position: absolute;
+    left: 12px; right: 12px; top: 0; bottom: 0;
+    background: var(--red);
+    
+    /* 3阶像素阴影 */
+    box-shadow: 
+        0 4px 0 var(--red),
+        -4px 8px 0 var(--red), 4px 8px 0 var(--red),
+        -8px 12px 0 var(--red), 8px 12px 0 var(--red),
+        /* 黑边 */
+        0 -4px 0 #000,
+        -12px 12px 0 #000, 12px 12px 0 #000,
+        -4px 4px 0 #000, 4px 4px 0 #000,
+        -8px 8px 0 #000, 8px 8px 0 #000,
+        /* 高光 */
+        inset 8px 0 0 rgba(255,255,255,0.3),
+        inset 20px 0 0 rgba(255,255,255,0.1);
+}
+
+/* 顶部封口 */
+.cap-top::before {
+    content: ''; position: absolute;
+    top: 4px; left: 4px; right: 4px; height: 100%;
+    border-left: 4px solid #000; border-right: 4px solid #000;
+    pointer-events: none;
+}
+
+/* --- 胶囊下半部分 --- */
+.cap-bottom {
+    position: absolute;
+    left: 0; bottom: 0; width: 100%; height: 140px;
+    background: transparent;
+    z-index: 1;
+    /* 核心修复：transition: all */
+    transition: all 0.6s cubic-bezier(0.6, -0.28, 0.735, 0.045);
+}
+
+.cap-bottom::after {
+    content: ''; display: block;
+    position: absolute;
+    left: 12px; right: 12px; top: 0; bottom: 0;
+    background: var(--white);
+    
+    /* 3阶像素阴影 */
+    box-shadow: 
+        0 -4px 0 var(--white),
+        -4px -8px 0 var(--white), 4px -8px 0 var(--white),
+        -8px -12px 0 var(--white), 8px -12px 0 var(--white),
+        /* 黑边 */
+        0 4px 0 #000,
+        -12px -12px 0 #000, 12px -12px 0 #000,
+        -4px -4px 0 #000, 4px -4px 0 #000,
+        -8px -8px 0 #000, 8px -8px 0 #000,
+        /* 阴影 */
+        inset -10px 0 0 rgba(0,0,0,0.05);
+}
+
+.cap-bottom::before {
+    content: ''; position: absolute;
+    bottom: 4px; left: 4px; right: 4px; height: 100%;
+    border-left: 4px solid #000; border-right: 4px solid #000;
+    pointer-events: none;
+}
+
+/* --- 中间缝隙 (半透明，非黑线) --- */
+.capsule::after {
+    content: ''; position: absolute;
+    top: 50%; left: 0; right: 0; 
+    height: 4px; /* 缝隙高度 */
+    background: rgba(0,0,0,0.15); /* 半透明 */
+    margin-top: -2px; z-index: 5;
+    margin-left: 20px; margin-right: 20px; /* 缩进 */
+    border-radius: 2px;
+    transition: opacity 0.3s;
+}
+
+/* --- 调皮动画类 --- */
+@keyframes shake-hard {
+    0% { transform: rotate(0deg); }
+    25% { transform: rotate(15deg); }
+    50% { transform: rotate(-15deg); }
+    75% { transform: rotate(5deg); }
+    100% { transform: rotate(0deg); }
+}
+.capsule.shaking { animation: shake-hard 0.5s ease-in-out; }
+.capsule.peeking .cap-top { transform: translateY(-15px) rotate(-5deg); }
+.capsule.peeking .cap-bottom { transform: translateY(15px) rotate(5deg); }
+
+/* --- 打开状态 (最终动画) --- */
+.capsule.open { animation: none; }
+.capsule.open .cap-top { transform: translateY(-200px) rotate(-20deg); opacity: 0; }
+.capsule.open .cap-bottom { transform: translateY(200px) rotate(20deg); opacity: 0; }
+.capsule.open::after { opacity: 0; }
+
+/* 说话气泡 */
+.pixel-bubble {
+    position: absolute; top: -60px; right: -80px;
+    background: #fff; border: 4px solid #000; padding: 10px;
+    font-size: 10px; color: #000; display: none; z-index: 20;
+    box-shadow: 4px 4px 0 rgba(0,0,0,0.2); width: 120px; text-align: center;
+}
+.pixel-bubble::after { content: ''; position: absolute; bottom: -10px; left: 20px; border-width: 10px 10px 0; border-style: solid; border-color: #000 transparent; }
+.pixel-bubble::before { content: ''; position: absolute; bottom: -4px; left: 24px; border-width: 6px 6px 0; border-style: solid; border-color: #fff transparent; z-index: 1; }
+
+/* --- 其他 --- */
+.paper { width: 600px; max-width: 90%; background: var(--paper); color: #333; padding: 30px; border: var(--border); box-shadow: 10px 10px 0 #000; position: relative;}
+.paper.fold { animation: fold 1.5s forwards; }
+@keyframes fold { 50% { transform: scale(0.1) rotate(180deg); } 100% { transform: scale(0); opacity: 0; } }
+.close-icon { position:absolute; top:-15px; right:-15px; background:red; color:#fff; border:2px solid #000; width:30px; height:30px; text-align:center; line-height:26px; cursor:pointer; box-shadow:4px 4px 0 #000; font-weight: bold; z-index: 10;}
+.pixel-footer { background: #111; color: #fff; padding: 40px; text-align: center; border-top: 4px solid #fff; font-size: 12px; }
+
+.success-code { color: var(--green); font-size: 14px; line-height: 2; text-align: center; display: none; }
+.success-code span { display: block; margin-bottom: 5px; }
+
+.letter-page { max-width: 800px; margin: 100px auto; min-height: 60vh; background: var(--paper); border: var(--border); padding: 40px; color: #333; box-shadow: 10px 10px 0 rgba(0,0,0,0.5); position: relative; }
+.letter-lines { line-height: 30px; background-image: linear-gradient(#ccc 1px, transparent 1px); background-size: 100% 30px; padding-bottom: 30px; }
+
+/* 后台 Admin */
+body.admin-mode { background-color: #eee !important; color: #333 !important; }
+.admin-header { background: #fff; padding: 15px; color: #333; display: flex; justify-content: space-between; align-items: center; border-bottom: 4px solid #000; margin-bottom: 20px; }
+.main-container { max-width: 1100px; margin: 0 auto; padding: 0 20px; color: #333; }
+.tabs { margin-bottom: -4px; display: flex; flex-wrap: wrap; z-index: 10; position: relative;}
+.tab-btn { background: #ccc; border: 4px solid #000; border-bottom: none; padding: 10px 15px; cursor: pointer; margin-right: 5px; font-size: 10px; font-weight: bold; color: #333; }
+.tab-btn.active { background: #fff; padding-bottom: 14px; position: relative; top: 0; }
+.admin-table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 10px; background: #fff; border: 2px solid #000; table-layout: fixed; color: #333; }
+.admin-table th, .admin-table td { border: 2px solid #000; padding: 8px; text-align: left; word-break: break-all; vertical-align: top; color: #333; }
+.admin-table th { background: #eee; }
+.badge { padding: 2px 6px; color: white; font-size: 8px; border:2px solid #000; text-transform: uppercase; font-weight: bold;}
+.badge.pending { background: #f39c12; }
+.badge.approved, .badge.sent { background: var(--green); }
+.badge.failed { background: var(--red); }
+.full-text-modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:2000; justify-content:center; align-items:center; }
+.full-text-box { width: 600px; max-height: 80vh; background: #fff; border: 4px solid #000; padding: 20px; overflow-y: auto; white-space: pre-wrap; word-break: break-all; position: relative; color: #333; }
